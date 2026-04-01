@@ -1,16 +1,31 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Header from "@/components/Header";
+import HomeSection from "@/components/sections/HomeSection";
+import ExperienceSection from "@/components/sections/ExperienceSection";
+import ProjectsSection from "@/components/sections/ProjectsSection";
+import PresentationsSection from "@/components/sections/PresentationsSection";
+import AchievementsSection from "@/components/sections/AchievementsSection";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const sections: Record<string, React.FC> = {
+  Home: HomeSection,
+  Experience: ExperienceSection,
+  Projects: ProjectsSection,
+  Presentations: PresentationsSection,
+  Achievements: AchievementsSection,
+};
+
+const Index = () => {
+  const [activeTab, setActiveTab] = useState("Home");
+  const ActiveSection = sections[activeTab];
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen">
+      <Header activeTab={activeTab} onTabChange={setActiveTab} />
+      <main>
+        <ActiveSection />
+      </main>
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
