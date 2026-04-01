@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, GitlabIcon as GithubIcon } from "lucide-react";
+import { ExternalLink, Code2 } from "lucide-react";
 import { projects } from "@/data/projects";
 import ImageGallery from "@/components/ImageGallery";
 import { Badge } from "@/components/ui/badge";
@@ -22,7 +22,7 @@ const ProjectsSection = () => {
               <div className="flex gap-2">
                 {proj.github && (
                   <a href={proj.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-                    <Github className="h-4 w-4" />
+                    <Code2 className="h-4 w-4" />
                   </a>
                 )}
                 {proj.link && (

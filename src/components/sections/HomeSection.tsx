@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { GitlabIcon as GithubIcon, LinkedinIcon, Mail } from "lucide-react";
+import { Code2, Link as LinkIcon, Mail } from "lucide-react";
 import { profile } from "@/data/profile";
 
 const HomeSection = () => {
@@ -18,14 +18,14 @@ const HomeSection = () => {
       <p className="text-xl text-muted-foreground mb-4">{profile.tagline}</p>
       <p className="text-muted-foreground leading-relaxed mb-8">{profile.bio}</p>
       <div className="flex items-center justify-center gap-4">
-        <a href={`mailto:${profile.email}`} className="text-muted-foreground hover:text-foreground transition-colors">
+        <a href={`mailto:${profile.email}`} className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Email">
           <Mail className="h-5 w-5" />
         </a>
-        <a href={profile.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-          <Github className="h-5 w-5" />
+        <a href={profile.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
+          <Code2 className="h-5 w-5" />
         </a>
-        <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-          <Linkedin className="h-5 w-5" />
+        <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
+          <LinkIcon className="h-5 w-5" />
         </a>
       </div>
     </motion.div>
