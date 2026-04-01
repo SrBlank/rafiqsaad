@@ -1,8 +1,8 @@
 export const profile = {
   name: "Saad Rafiq",
   title: "Software Engineer",
-  tagline: "Building elegant solutions to complex problems.",
-  bio: "I'm a software engineer passionate about building performant, scalable applications. I love open source, clean architecture, and solving hard problems.",
+  tagline: "Robotics · Machine Learning · Full-Stack Development",
+  bio: "I'm a software engineer with a dual B.S. in Computer Science and Applied Mathematics from Texas State University, currently pursuing my M.S. in Computer Science at Georgia Tech. My work spans autonomous robotics, machine learning research, and full-stack development — from building firefighting drones and stair-climbing rescue robots to publishing in IEEE and being featured in a Dell white paper. I thrive at the intersection of hardware and software, turning complex engineering challenges into real-world impact.",
   email: "hello@example.com",
   github: "https://github.com",
   linkedin: "https://linkedin.com",
