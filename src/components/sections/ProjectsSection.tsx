@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, GitlabIcon as GithubIcon } from "lucide-react";
 import { projects } from "@/data/projects";
 import ImageGallery from "@/components/ImageGallery";
 import { Badge } from "@/components/ui/badge";
