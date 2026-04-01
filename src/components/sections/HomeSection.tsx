@@ -28,7 +28,7 @@ const HomeSection = () => {
             <Code2 className="h-5 w-5" />
           </a>
           <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
-            <Linkedin className="h-5 w-5" />
+            <LinkedinIcon className="h-5 w-5" />
           </a>
         </div>
       </div>
