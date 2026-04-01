@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Code2, Mail, Linkedin, GraduationCap } from "lucide-react";
+import { Code2, Mail, LinkedinIcon, GraduationCap } from "lucide-react";
 import { profile } from "@/data/profile";
 import { education } from "@/data/education";
 import { Badge } from "@/components/ui/badge";
