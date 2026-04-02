@@ -26,7 +26,7 @@ export const projects: Project[] = [
     description:
       "In this project, we conduct a comparative analysis of numerical methods for pricing American-style options under the Black–Scholes framework. Specifically, we evaluate the Binomial Tree method, the Crank–Nicolson finite difference scheme, and an explicit Runge–Kutta SERKv2 approach with respect to computational efficiency, numerical stability, and convergence behavior. By analyzing their performance across varying discretization parameters and market conditions, we identify the practical trade-offs that influence method selection for solving free-boundary option pricing problems.",
     technologies: ["Python", "NumPy", "Matplotlib", "Financial Mathematics"],
-    images: [],
+    images: [{ src: "/images/placeholder.png", alt: "Black Scholes Methods" }],
   },
   {
     id: "proj-3",
