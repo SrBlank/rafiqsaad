@@ -17,7 +17,7 @@ export const projects: Project[] = [
     description:
       "Designed and built a Python-based wallpaper generation pipeline that programmatically composes astronomical star plots, weather data, and UI widgets into a single high-resolution desktop wallpaper. Implemented OS-aware automation using systemd user services and timers to schedule wallpaper updates at configurable intervals without blocking login or user sessions. Integrated external APIs (weather, geolocation) with robust caching, retry logic, and timezone handling to ensure reliable, deterministic rendering. Developed a config-driven architecture (YAML) enabling theme customization, layout scaling, and widget placement without code changes. Engineered image processing and compositing workflows using Pillow (alpha blending, scaling, rounded masks, transparency) to dynamically adapt layouts across screen resolutions. Built cross-desktop compatibility logic (GNOME, KDE, Arch/Ubuntu) for programmatic wallpaper setting via environment detection. Packaged the project with install/uninstall scripts, virtual environments, and documentation to support reproducible setup on fresh Linux systems.",
     technologies: ["Python", "Pillow", "systemd", "YAML", "Linux"],
-    images: [],
+    images: [{ src: "/images/placeholder.png", alt: "WallpaperGen" }],
   },
   {
     id: "proj-2",
