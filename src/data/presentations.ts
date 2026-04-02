@@ -17,10 +17,11 @@ export interface Poster {
 export const presentations: Presentation[] = [
   {
     id: "pres-9",
-    title: "New Ventures",
-    event: "New Ventures Presentation",
-    location: "TBD",
+    title: "TXST New Ventures Competition and Accelerator Program",
+    event: "$20,000 Starup Seed Funding",
+    location: "Texas State University, San Marcos, Texas",
     date: "Jun. 2024",
+    award: "First Place Awardee",
     images: [
       { src: "/images/presentations/newventures/newventures1.JPG", alt: "New Ventures presentation" },
       { src: "/images/presentations/newventures/newventures2.JPG", alt: "New Ventures presentation" },
@@ -30,9 +31,9 @@ export const presentations: Presentation[] = [
   },
   {
     id: "pres-10",
-    title: "SXSW",
-    event: "SXSW Presentation",
-    location: "TBD",
+    title: "Smartcity Firefighting Showcase",
+    event: "SXSW Innovation Showcase",
+    location: "Austin, Texas",
     date: "Mar. 2024",
     images: [
       { src: "/images/presentations/sxsw/sxsw1.JPG", alt: "SXSW presentation" },
@@ -41,9 +42,9 @@ export const presentations: Presentation[] = [
   },
   {
     id: "pres-11",
-    title: "SHPE Professional Development",
-    event: "SHPE Professional Development",
-    location: "TBD",
+    title: "Professional Development for SHPE National Convention",
+    event: "Society of Hispanic Professsional Engineers Meeting",
+    location: "Texas State University, San Marcos, Texas",
     date: "Nov. 2023",
     images: [
       { src: "/images/presentations/shpeprofdev/profdev1.jpg", alt: "SHPE Professional Development" },
