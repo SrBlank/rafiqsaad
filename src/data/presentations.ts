@@ -69,7 +69,7 @@ export const presentations: Presentation[] = [
     event: "Numerical Methods for Data Science and Engineering",
     location: "Texas State University, San Marcos, Texas",
     date: "Sep. 2022",
-    images: [{ src: "/images/presentations/nmdse.png", alt: "Numerical Methods presentation" }],
+    images: [{ src: "/images/presentations/nmdse/nmdse.png", alt: "Numerical Methods presentation" }],
   },
   {
     id: "pres-7",
