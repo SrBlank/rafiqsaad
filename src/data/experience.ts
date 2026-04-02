@@ -7,6 +7,7 @@ export interface Experience {
   description: string[];
   technologies: string[];
   images: { src: string; alt: string }[];
+  videos?: string[];
   website?: string;
 }
 
@@ -24,7 +25,9 @@ export const experiences: Experience[] = [
       "Collaborated with a team of architects and managers to ensure product will be effective for consumers",
     ],
     technologies: ["Python", "AWS", "Azure", "GCP", "SDK Development"],
-    images: [],
+    images: [
+      { src: "/images/placeholder.png", alt: "Dell Technologies internship" },
+    ],
     website: "https://www.dell.com/en-us",
   },
   {
@@ -43,6 +46,10 @@ export const experiences: Experience[] = [
     ],
     technologies: ["React", "Express", "MongoDB", "Python", "ROS2", "SLAM", "Lidar"],
     images: [],
+    videos: [
+      "https://youtu.be/N2GvwWyt6VY",
+      "https://youtu.be/IgRzOHUe-v4",
+    ],
     website: "https://hipe.wp.txstate.edu/",
   },
   {
@@ -81,7 +88,9 @@ export const experiences: Experience[] = [
       "Presented research at the undergraduate research conference hosted by the honors college to faculty and students",
     ],
     technologies: ["MATLAB", "RPCA", "k-means", "Machine Learning", "Computer Vision"],
-    images: [],
+    images: [
+      { src: "/images/placeholder.png", alt: "Machine Learning Research" },
+    ],
     website: "https://sites.google.com/view/ivanojedaruiz?pli=1",
   },
   {
@@ -97,7 +106,9 @@ export const experiences: Experience[] = [
       "Collaborate with other tutors for higher-level problems to develop different teaching strategies",
     ],
     technologies: ["C++", "Python", "Assembly", "Mathematics"],
-    images: [],
+    images: [
+      { src: "/images/placeholder.png", alt: "Tutoring" },
+    ],
     website: "https://hlsamp.cose.txst.edu/collaborative-learning-center.html",
   },
   {

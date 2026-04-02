@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Code2, Mail, Link as LinkIcon, GraduationCap } from "lucide-react";
+import { Mail, GraduationCap } from "lucide-react";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { profile } from "@/data/profile";
 import { education } from "@/data/education";
 import { Badge } from "@/components/ui/badge";
@@ -25,10 +26,10 @@ const HomeSection = () => {
             <Mail className="h-5 w-5" />
           </a>
           <a href={profile.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
-            <Code2 className="h-5 w-5" />
+            <FaGithub className="h-5 w-5" />
           </a>
           <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
-            <LinkIcon className="h-5 w-5" />
+            <FaLinkedinIn className="h-5 w-5" />
           </a>
         </div>
       </div>
@@ -51,7 +52,7 @@ const HomeSection = () => {
                 <p className="font-semibold text-sm">{edu.degree}</p>
                 <p className="text-sm text-muted-foreground">{edu.institution}</p>
               </div>
-              <Badge variant={edu.status === "In Progress (Online)" ? "default" : "secondary"} className="w-fit text-xs">
+              <Badge variant={edu.status.includes("Expected") ? "default" : "secondary"} className="w-fit text-xs">
                 {edu.status}
               </Badge>
             </div>
