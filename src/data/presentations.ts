@@ -16,6 +16,40 @@ export interface Poster {
 
 export const presentations: Presentation[] = [
   {
+    id: "pres-9",
+    title: "New Ventures",
+    event: "New Ventures Presentation",
+    location: "TBD",
+    date: "Jun. 2024",
+    images: [
+      { src: "/images/presentations/newventures/newventures1.JPG", alt: "New Ventures presentation" },
+      { src: "/images/presentations/newventures/newventures2.JPG", alt: "New Ventures presentation" },
+      { src: "/images/presentations/newventures/newventures3.jpg", alt: "New Ventures presentation" },
+      { src: "/images/presentations/newventures/newventures4.JPG", alt: "New Ventures presentation" },
+    ],
+  },
+  {
+    id: "pres-10",
+    title: "SXSW",
+    event: "SXSW Presentation",
+    location: "TBD",
+    date: "Mar. 2024",
+    images: [
+      { src: "/images/presentations/sxsw/sxsw1.JPG", alt: "SXSW presentation" },
+      { src: "/images/presentations/sxsw/sxsw2.JPG", alt: "SXSW presentation" },
+    ],
+  },
+  {
+    id: "pres-11",
+    title: "SHPE Professional Development",
+    event: "SHPE Professional Development",
+    location: "TBD",
+    date: "Nov. 2023",
+    images: [
+      { src: "/images/presentations/shpeprofdev/profdev1.jpg", alt: "SHPE Professional Development" },
+    ],
+  },
+  {
     id: "pres-1",
     title: "Finite Difference Methods for Solving the Black-Scholes PDE for American Options Pricing",
     event: "Numerical Analysis Research Presentation",
@@ -29,7 +63,8 @@ export const presentations: Presentation[] = [
     event: "Texas State Data Analytics Showcase",
     location: "Texas State University, San Marcos, Texas",
     date: "Apr. 2023",
-    images: [{ src: "/images/presentations/dataanalytics/data1.jpg", alt: "Data Analytics Showcase" },
+    images: [
+      { src: "/images/presentations/dataanalytics/data1.jpg", alt: "Data Analytics Showcase" },
       { src: "/images/presentations/dataanalytics/data2.jpg", alt: "Data Analytics Showcase" },
       { src: "/images/presentations/dataanalytics/data3.jpg", alt: "Data Analytics Showcase" },
     ],
@@ -48,7 +83,8 @@ export const presentations: Presentation[] = [
     event: "5th Annual Meeting of the SIAM Texas-Louisiana Section",
     location: "University of Houston, Houston, Texas",
     date: "Oct. 2022",
-    images: [{ src: "/images/presentations/siam/siam1.jpg", alt: "SIAM presentation" },
+    images: [
+      { src: "/images/presentations/siam/siam1.jpg", alt: "SIAM presentation" },
       { src: "/images/presentations/siam/siam2.jpg", alt: "SIAM presentation" },
     ],
   },
@@ -61,6 +97,7 @@ export const presentations: Presentation[] = [
     images: [
       { src: "/images/presentations/sydata/sydata1.jpg", alt: "SyData presentation" },
       { src: "/images/presentations/sydata/sydata2.jpg", alt: "SyData presentation" },
+      { src: "/images/presentations/sydata/IMG_0193-e1673315754352.jpg", alt: "SyData presentation" },
     ],
   },
   {
@@ -69,7 +106,7 @@ export const presentations: Presentation[] = [
     event: "Numerical Methods for Data Science and Engineering",
     location: "Texas State University, San Marcos, Texas",
     date: "Sep. 2022",
-    images: [{ src: "/images/presentations/nmdse/nmdse.png", alt: "Numerical Methods presentation" }],
+    images: [{ src: "/images/presentations/nmdse/ndmse.png", alt: "Numerical Methods presentation" }],
   },
   {
     id: "pres-7",
@@ -104,17 +141,17 @@ export const presentations: Presentation[] = [
 export const posters: Poster[] = [
   {
     id: "poster-1",
-    title: "Modern Web Architecture Patterns",
-    image: "",
+    title: "Black-Scholes Methods Poster",
+    image: "/images/presentations/posters/blackscholes-poster.jpeg",
   },
   {
     id: "poster-2",
-    title: "Real-Time Applications",
-    image: "",
+    title: "Autonomous Robot Poster",
+    image: "/images/presentations/posters/robot-poster.png",
   },
   {
     id: "poster-3",
-    title: "Cloud Infrastructure",
-    image: "",
+    title: "RPCA Motion Detection Poster",
+    image: "/images/presentations/posters/rpca-poster.png",
   },
 ];
