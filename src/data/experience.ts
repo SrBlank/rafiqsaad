@@ -46,9 +46,9 @@ export const experiences: Experience[] = [
     ],
     technologies: ["React", "Express", "MongoDB", "Python", "ROS2", "SLAM", "Lidar"],
     images: [
-      { src: "/images/scout-front.jpg", alt: "Firefighting drone - front view" },
-      { src: "/images/scout-top.jpg", alt: "Firefighting drone - top view" },
-      { src: "/images/working.jpg", alt: "Working on drone configuration" },
+      { src: "/images/experience/scout-front.jpg", alt: "Scout drone - front view" },
+      { src: "/images/experience/scout-top.jpg", alt: "Scout drone - top view" },
+      { src: "/images/experience/working.jpg", alt: "Working on drone configuration" },
     ],
     videos: [
       "https://youtu.be/N2GvwWyt6VY",

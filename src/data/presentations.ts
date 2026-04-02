@@ -21,7 +21,7 @@ export const presentations: Presentation[] = [
     event: "Numerical Analysis Research Presentation",
     location: "Texas State University, San Marcos, Texas",
     date: "Apr. 2023",
-    images: [{ src: "/images/placeholder.png", alt: "Black-Scholes presentation" }],
+    images: [{ src: "/images/presentations/numericalfinal/numericala.jpeg", alt: "Black-Scholes presentation" }],
   },
   {
     id: "pres-2",
@@ -29,7 +29,10 @@ export const presentations: Presentation[] = [
     event: "Texas State Data Analytics Showcase",
     location: "Texas State University, San Marcos, Texas",
     date: "Apr. 2023",
-    images: [{ src: "/images/placeholder.png", alt: "Data Analytics Showcase" }],
+    images: [{ src: "/images/presentations/dataanalytics/data1.jpg", alt: "Data Analytics Showcase" },
+      { src: "/images/presentations/dataanalytics/data2.jpg", alt: "Data Analytics Showcase" },
+      { src: "/images/presentations/dataanalytics/data3.jpg", alt: "Data Analytics Showcase" },
+    ],
   },
   {
     id: "pres-3",
@@ -37,7 +40,7 @@ export const presentations: Presentation[] = [
     event: "Texas State Math Graduate Expo",
     location: "Texas State University, San Marcos, Texas",
     date: "Nov. 2022",
-    images: [{ src: "/images/placeholder.png", alt: "Math Graduate Expo" }],
+    images: [{ src: "/images/presentations/mathgradexpo/mathexpo1.jpg", alt: "Math Graduate Expo" }],
   },
   {
     id: "pres-4",
@@ -45,7 +48,9 @@ export const presentations: Presentation[] = [
     event: "5th Annual Meeting of the SIAM Texas-Louisiana Section",
     location: "University of Houston, Houston, Texas",
     date: "Oct. 2022",
-    images: [{ src: "/images/placeholder.png", alt: "SIAM presentation" }],
+    images: [{ src: "/images/presentations/siam/siam1.jpg", alt: "SIAM presentation" },
+      { src: "/images/presentations/siam/siam2.jpg", alt: "SIAM presentation" },
+    ],
   },
   {
     id: "pres-5",
@@ -53,7 +58,10 @@ export const presentations: Presentation[] = [
     event: "Data Science Symposium (SyData 2022)",
     location: "Texas State University, San Marcos, Texas",
     date: "Sep. 2022",
-    images: [{ src: "/images/placeholder.png", alt: "SyData presentation" }],
+    images: [
+      { src: "/images/presentations/sydata/sydata1.jpg", alt: "SyData presentation" },
+      { src: "/images/presentations/sydata/sydata2.jpg", alt: "SyData presentation" },
+    ],
   },
   {
     id: "pres-6",
@@ -61,7 +69,7 @@ export const presentations: Presentation[] = [
     event: "Numerical Methods for Data Science and Engineering",
     location: "Texas State University, San Marcos, Texas",
     date: "Sep. 2022",
-    images: [{ src: "/images/placeholder.png", alt: "Numerical Methods presentation" }],
+    images: [{ src: "/images/presentations/nmdse.png", alt: "Numerical Methods presentation" }],
   },
   {
     id: "pres-7",
@@ -71,12 +79,12 @@ export const presentations: Presentation[] = [
     date: "Jul. 2022",
     award: "First Place Awardee",
     images: [
-      { src: "/images/r2.jpg", alt: "NSF REU presentation audience" },
-      { src: "/images/r3.jpg", alt: "Presenting with robot" },
-      { src: "/images/r4.jpg", alt: "Poster presentation" },
-      { src: "/images/r6.jpg", alt: "First place award ceremony" },
-      { src: "/images/r8.jpg", alt: "Team photo" },
-      { src: "/images/reu-txst.jpg", alt: "REU presentation with robot" },
+      { src: "/images/presentations/nsfreu/r2.jpg", alt: "NSF REU presentation" },
+      { src: "/images/presentations/nsfreu/r3.jpg", alt: "NSF REU presentation" },
+      { src: "/images/presentations/nsfreu/r4.jpg", alt: "NSF REU presentation" },
+      { src: "/images/presentations/nsfreu/r6.jpg", alt: "NSF REU presentation" },
+      { src: "/images/presentations/nsfreu/r8.jpg", alt: "NSF REU presentation" },
+      { src: "/images/presentations/nsfreu/reu-txst.jpg", alt: "NSF REU presentation" },
     ],
   },
   {
@@ -85,7 +93,11 @@ export const presentations: Presentation[] = [
     event: "Undergraduate Research Conference",
     location: "Texas State University, San Marcos, Texas",
     date: "Apr. 2022",
-    images: [{ src: "/images/placeholder.png", alt: "Undergraduate Research Conference" }],
+    images: [
+      { src: "/images/presentations/uhrc/uhrc1.jpg", alt: "Undergraduate Research Conference" },
+      { src: "/images/presentations/uhrc/uhrc2.jpg", alt: "Undergraduate Research Conference" },
+      { src: "/images/presentations/uhrc/uhrc3.jpg", alt: "Undergraduate Research Conference" },
+    ],
   },
 ];
 
