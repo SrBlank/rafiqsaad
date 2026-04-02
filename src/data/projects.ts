@@ -44,6 +44,6 @@ export const projects: Project[] = [
     description:
       "In this project, we developed RPI-Alarm, a network-based alarm system built with Flask that enables users to schedule and control alarms remotely from any device on a local network. The system integrates software and hardware components, including an ESP32 microcontroller with an HC-SR04 proximity sensor, GPIO and keyboard inputs, and cross-platform support for Windows and Linux environments. Through this project, we explored full-stack web development, embedded systems communication, and event-driven design while addressing real-world reliability and usability challenges in alarm-based automation.",
     technologies: ["Python", "Flask", "ESP32", "Raspberry Pi", "IoT"],
-    images: [],
+    images: [{ src: "/images/placeholder.png", alt: "RPI-Alarm" }],
   },
 ];
