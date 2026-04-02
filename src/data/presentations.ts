@@ -21,7 +21,7 @@ export const presentations: Presentation[] = [
     event: "Numerical Analysis Research Presentation",
     location: "Texas State University, San Marcos, Texas",
     date: "Apr. 2023",
-    images: [],
+    images: [{ src: "/images/placeholder.png", alt: "Black-Scholes presentation" }],
   },
   {
     id: "pres-2",
@@ -29,7 +29,7 @@ export const presentations: Presentation[] = [
     event: "Texas State Data Analytics Showcase",
     location: "Texas State University, San Marcos, Texas",
     date: "Apr. 2023",
-    images: [],
+    images: [{ src: "/images/placeholder.png", alt: "Data Analytics Showcase" }],
   },
   {
     id: "pres-3",
@@ -37,7 +37,7 @@ export const presentations: Presentation[] = [
     event: "Texas State Math Graduate Expo",
     location: "Texas State University, San Marcos, Texas",
     date: "Nov. 2022",
-    images: [],
+    images: [{ src: "/images/placeholder.png", alt: "Math Graduate Expo" }],
   },
   {
     id: "pres-4",
@@ -45,7 +45,7 @@ export const presentations: Presentation[] = [
     event: "5th Annual Meeting of the SIAM Texas-Louisiana Section",
     location: "University of Houston, Houston, Texas",
     date: "Oct. 2022",
-    images: [],
+    images: [{ src: "/images/placeholder.png", alt: "SIAM presentation" }],
   },
   {
     id: "pres-5",
@@ -53,7 +53,7 @@ export const presentations: Presentation[] = [
     event: "Data Science Symposium (SyData 2022)",
     location: "Texas State University, San Marcos, Texas",
     date: "Sep. 2022",
-    images: [],
+    images: [{ src: "/images/placeholder.png", alt: "SyData presentation" }],
   },
   {
     id: "pres-6",
@@ -61,7 +61,7 @@ export const presentations: Presentation[] = [
     event: "Numerical Methods for Data Science and Engineering",
     location: "Texas State University, San Marcos, Texas",
     date: "Sep. 2022",
-    images: [],
+    images: [{ src: "/images/placeholder.png", alt: "Numerical Methods presentation" }],
   },
   {
     id: "pres-7",
@@ -70,7 +70,7 @@ export const presentations: Presentation[] = [
     location: "Texas State University, San Marcos, Texas",
     date: "Jul. 2022",
     award: "First Place Awardee",
-    images: [],
+    images: [{ src: "/images/placeholder.png", alt: "NSF REU presentation" }],
   },
   {
     id: "pres-8",
@@ -78,7 +78,7 @@ export const presentations: Presentation[] = [
     event: "Undergraduate Research Conference",
     location: "Texas State University, San Marcos, Texas",
     date: "Apr. 2022",
-    images: [],
+    images: [{ src: "/images/placeholder.png", alt: "Undergraduate Research Conference" }],
   },
 ];
 
