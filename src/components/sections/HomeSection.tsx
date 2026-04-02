@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Mail, GraduationCap, Github, Linkedin } from "lucide-react";
+import { Mail, GraduationCap } from "lucide-react";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { profile } from "@/data/profile";
 import { education } from "@/data/education";
 import { Badge } from "@/components/ui/badge";
