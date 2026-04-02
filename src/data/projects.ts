@@ -35,7 +35,7 @@ export const projects: Project[] = [
     description:
       "This project uses Simultaneous Localization and Mapping (SLAM) to track and map people in real-time within a changing environment. By combining a stream of footage and machine learning, the system will identify and follow people as they move, updating the map continuously. This project can be applied to areas like indoor navigation, autonomous robots, and smart surveillance, with a focus on reliable human detection.",
     technologies: ["Python", "ROS2", "OpenCV", "Machine Learning", "SLAM"],
-    images: [],
+    images: [{ src: "/images/placeholder.png", alt: "SLAM Person Mapping" }],
   },
   {
     id: "proj-4",
