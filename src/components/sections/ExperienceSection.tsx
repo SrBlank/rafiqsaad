@@ -45,7 +45,7 @@ const ExperienceSection = () => {
                 Visit website <ExternalLink className="h-3.5 w-3.5" />
               </a>
             )}
-            <ImageGallery images={exp.images} />
+            <ImageGallery images={exp.images} videos={exp.videos} />
           </motion.div>
         ))}
       </div>
