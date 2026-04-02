@@ -26,7 +26,7 @@ const HomeSection = () => {
             <Mail className="h-5 w-5" />
           </a>
           <a href={profile.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
-            <Github className="h-5 w-5" />
+            <FaGithub className="h-5 w-5" />
           </a>
           <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
             <Linkedin className="h-5 w-5" />
