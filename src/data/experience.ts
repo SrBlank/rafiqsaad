@@ -45,7 +45,11 @@ export const experiences: Experience[] = [
       "Crafted autonomous flight code, optimized SLAM, and built exploration path planning with mobility constraints",
     ],
     technologies: ["React", "Express", "MongoDB", "Python", "ROS2", "SLAM", "Lidar"],
-    images: [],
+    images: [
+      { src: "/images/scout-front.jpg", alt: "Firefighting drone - front view" },
+      { src: "/images/scout-top.jpg", alt: "Firefighting drone - top view" },
+      { src: "/images/working.jpg", alt: "Working on drone configuration" },
+    ],
     videos: [
       "https://youtu.be/N2GvwWyt6VY",
       "https://youtu.be/IgRzOHUe-v4",

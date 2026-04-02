@@ -70,7 +70,14 @@ export const presentations: Presentation[] = [
     location: "Texas State University, San Marcos, Texas",
     date: "Jul. 2022",
     award: "First Place Awardee",
-    images: [{ src: "/images/placeholder.png", alt: "NSF REU presentation" }],
+    images: [
+      { src: "/images/r2.jpg", alt: "NSF REU presentation audience" },
+      { src: "/images/r3.jpg", alt: "Presenting with robot" },
+      { src: "/images/r4.jpg", alt: "Poster presentation" },
+      { src: "/images/r6.jpg", alt: "First place award ceremony" },
+      { src: "/images/r8.jpg", alt: "Team photo" },
+      { src: "/images/reu-txst.jpg", alt: "REU presentation with robot" },
+    ],
   },
   {
     id: "pres-8",
