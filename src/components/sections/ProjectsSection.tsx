@@ -34,7 +34,7 @@ const ProjectsSection = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
                 >
-                  <Github className="h-3.5 w-3.5" /> View source
+                  <FaGithub className="h-3.5 w-3.5" /> View source
                 </a>
               )}
               {proj.link && (
