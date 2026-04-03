@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
 import { projects } from "@/data/projects";
 import ImageGallery from "@/components/ImageGallery";
 import { Badge } from "@/components/ui/badge";
