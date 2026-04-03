@@ -39,7 +39,7 @@ const ProjectsSection = () => {
                 <Badge key={t} variant="secondary">{t}</Badge>
               ))}
             </div>
-            <ImageGallery images={proj.images} />
+            <ImageGallery images={proj.images} videos={proj.videos} />
           </motion.div>
         ))}
       </div>
