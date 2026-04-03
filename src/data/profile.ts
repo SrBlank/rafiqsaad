@@ -6,5 +6,5 @@ export const profile = {
   email: "saadarafiq@gmail.com",
   github: "https://github.com/SrBlank",
   linkedin: "https://www.linkedin.com/in/rafiq-saad/",
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "/rafiqsaad-resume.pdf",
 };
