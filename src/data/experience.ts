@@ -11,6 +11,8 @@ export interface Experience {
   website?: string;
 }
 
+const base = import.meta.env.BASE_URL;
+
 export const experiences: Experience[] = [
   {
     id: "exp-1",
@@ -42,10 +44,10 @@ export const experiences: Experience[] = [
     ],
     technologies: ["Python", "AWS", "Azure", "GCP", "SDK Development"],
     images: [
-      { src: "/images/experience/dellintern/dell1.jpg", alt: "Dell internship" },
-      { src: "/images/experience/dellintern/dell2.jpg", alt: "Dell internship" },
-      { src: "/images/experience/dellintern/dell3.JPG", alt: "Dell internship" },
-      { src: "/images/experience/dellintern/dell4.JPG", alt: "Dell internship" },
+      { src: `${base}images/experience/dellintern/dell1.jpg`, alt: "Dell internship" },
+      { src: `${base}images/experience/dellintern/dell2.jpg`, alt: "Dell internship" },
+      { src: `${base}images/experience/dellintern/dell3.JPG`, alt: "Dell internship" },
+      { src: `${base}images/experience/dellintern/dell4.JPG`, alt: "Dell internship" },
     ],
     website: "https://www.dell.com/en-us",
   },
@@ -65,15 +67,15 @@ export const experiences: Experience[] = [
     ],
     technologies: ["React", "Express", "MongoDB", "Python", "ROS2", "SLAM", "Lidar"],
     images: [
-      { src: "/images/experience/hipedrones/scout-front.jpg", alt: "Scout drone - front view" },
-      { src: "/images/experience/hipedrones/scout-top.jpg", alt: "Scout drone - top view" },
-      { src: "/images/experience/hipedrones/halo-front.jpg", alt: "Halo drone - front view" },
-      { src: "/images/experience/hipedrones/halo-top.jpg", alt: "Halo drone - top view" },
-      { src: "/images/experience/hipedrones/phnx-front.jpg", alt: "Phoenix drone - front view" },
-      { src: "/images/experience/hipedrones/phnx-back.jpg", alt: "Phoenix drone - back view" },
-      { src: "/images/experience/hipedrones/working.jpg", alt: "Working on drone configuration" },
-      { src: "/images/experience/hipedrones/alldrones.jpg", alt: "Working on drone configuration" },
-      { src: "/images/experience/hipedrones/working2.jpg", alt: "Working on drone configuration" },
+      { src: `${base}images/experience/hipedrones/scout-front.jpg`, alt: "Scout drone - front view" },
+      { src: `${base}images/experience/hipedrones/scout-top.jpg`, alt: "Scout drone - top view" },
+      { src: `${base}images/experience/hipedrones/halo-front.jpg`, alt: "Halo drone - front view" },
+      { src: `${base}images/experience/hipedrones/halo-top.jpg`, alt: "Halo drone - top view" },
+      { src: `${base}images/experience/hipedrones/phnx-front.jpg`, alt: "Phoenix drone - front view" },
+      { src: `${base}images/experience/hipedrones/phnx-back.jpg`, alt: "Phoenix drone - back view" },
+      { src: `${base}images/experience/hipedrones/working.jpg`, alt: "Working on drone configuration" },
+      { src: `${base}images/experience/hipedrones/alldrones.jpg`, alt: "Working on drone configuration" },
+      { src: `${base}images/experience/hipedrones/working2.jpg`, alt: "Working on drone configuration" },
     ],
     videos: [
       "https://youtu.be/N2GvwWyt6VY",
@@ -101,12 +103,12 @@ export const experiences: Experience[] = [
     ],
     technologies: ["Python", "ROS2", "Nvidia Jetson", "CUDA", "Machine Learning", "IEEE"],
     images: [
-      { src: "/images/experience/nsfreu/robot-front.jpg", alt: "Robot front view" },
-      { src: "/images/experience/nsfreu/robot-side.jpg", alt: "Robot side view" },
-      { src: "/images/experience/nsfreu/robot-top.jpg", alt: "Robot top view" },
-      { src: "/images/experience/nsfreu/robot-box.jpg", alt: "Robot in box" },
-      { src: "/images/experience/nsfreu/robot-saad-erich.jpg", alt: "Saad and Erich with robot" },
-      { src: "/images/experience/nsfreu/robot-team.jpg", alt: "Robot team" },
+      { src: `${base}images/experience/nsfreu/robot-front.jpg`, alt: "Robot front view" },
+      { src: `${base}images/experience/nsfreu/robot-side.jpg`, alt: "Robot side view" },
+      { src: `${base}images/experience/nsfreu/robot-top.jpg`, alt: "Robot top view" },
+      { src: `${base}images/experience/nsfreu/robot-box.jpg`, alt: "Robot in box" },
+      { src: `${base}images/experience/nsfreu/robot-saad-erich.jpg`, alt: "Saad and Erich with robot" },
+      { src: `${base}images/experience/nsfreu/robot-team.jpg`, alt: "Robot team" },
     ],
     website: "https://hipe.wp.txstate.edu/",
   },
@@ -125,12 +127,12 @@ export const experiences: Experience[] = [
     ],
     technologies: ["MATLAB", "RPCA", "k-means", "Machine Learning", "Computer Vision"],
     images: [
-      { src: "/images/experience/iorteam/rpca-poster.jpg", alt: "RPCA research poster" },
-      { src: "/images/experience/iorteam/rpca1.png", alt: "RPCA result 1" },
-      { src: "/images/experience/iorteam/rpca2.png", alt: "RPCA result 2" },
-      { src: "/images/experience/iorteam/rpca3.png", alt: "RPCA result 3" },
-      { src: "/images/experience/iorteam/uhrc1.jpg", alt: "Undergraduate research conference 1" },
-      { src: "/images/experience/iorteam/uhrc2.jpg", alt: "Undergraduate research conference 2" },
+      { src: `${base}images/experience/iorteam/rpca-poster.jpg`, alt: "RPCA research poster" },
+      { src: `${base}images/experience/iorteam/rpca1.png`, alt: "RPCA result 1" },
+      { src: `${base}images/experience/iorteam/rpca2.png`, alt: "RPCA result 2" },
+      { src: `${base}images/experience/iorteam/rpca3.png`, alt: "RPCA result 3" },
+      { src: `${base}images/experience/iorteam/uhrc1.jpg`, alt: "Undergraduate research conference 1" },
+      { src: `${base}images/experience/iorteam/uhrc2.jpg`, alt: "Undergraduate research conference 2" },
     ],
     website: "https://sites.google.com/view/ivanojedaruiz?pli=1",
   },
@@ -148,7 +150,7 @@ export const experiences: Experience[] = [
     ],
     technologies: ["C++", "Python", "Assembly", "Mathematics"],
     images: [
-      { src: "/images/experience/clc/CLC.jpg", alt: "Collaborative Learning Center" },
+      { src: `${base}images/experience/clc/CLC.jpg`, alt: "Collaborative Learning Center" },
     ],
     website: "https://hlsamp.cose.txst.edu/collaborative-learning-center.html",
   },

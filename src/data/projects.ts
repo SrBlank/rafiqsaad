@@ -10,6 +10,8 @@ export interface Project {
   videos?: string[];
 }
 
+const base = import.meta.env.BASE_URL;
+
 export const projects: Project[] = [
   {
     id: "proj-1",
@@ -19,9 +21,9 @@ export const projects: Project[] = [
     technologies: ["Python", "curses", "CLI", "Linux", "GitHub", "APT"],
     github: "https://github.com/SrBlank/shellsweeper",
     images: [
-      { src: "/images/projects/shellsweeper/home.png", alt: "ShellSweeper home" },
-      { src: "/images/projects/shellsweeper/start.png", alt: "ShellSweeper start" },
-      { src: "/images/projects/shellsweeper/game.png", alt: "ShellSweeper game" },
+      { src: `${base}images/projects/shellsweeper/home.png`, alt: "ShellSweeper home" },
+      { src: `${base}images/projects/shellsweeper/start.png`, alt: "ShellSweeper start" },
+      { src: `${base}images/projects/shellsweeper/game.png`, alt: "ShellSweeper game" },
     ],
   },
   {
@@ -33,7 +35,7 @@ export const projects: Project[] = [
     technologies: ["Python", "Pillow", "systemd", "YAML", "Linux"],
     github: "https://github.com/SrBlank/WallpaperGen",
     images: [
-      { src: "/images/projects/wallpapergen/composite_plot.png", alt: "WallpaperGen composite" },
+      { src: `${base}images/projects/wallpapergen/composite_plot.png`, alt: "WallpaperGen composite" },
     ],
   },
   {
@@ -65,10 +67,10 @@ export const projects: Project[] = [
     technologies: ["Python", "Flask", "ESP32", "Raspberry Pi", "IoT"],
     github: "https://github.com/SrBlank/RPI-Alarm",
     images: [
-      { src: "/images/projects/rpialarm/RPI_main.png", alt: "RPI-Alarm main" },
-      { src: "/images/projects/rpialarm/RPI_new.png", alt: "RPI-Alarm new" },
-      { src: "/images/projects/rpialarm/rpi_new_alarms.png", alt: "RPI-Alarm new alarms" },
-      { src: "/images/projects/rpialarm/RPI_settings.png", alt: "RPI-Alarm settings" },
+      { src: `${base}images/projects/rpialarm/RPI_main.png`, alt: "RPI-Alarm main" },
+      { src: `${base}images/projects/rpialarm/RPI_new.png`, alt: "RPI-Alarm new" },
+      { src: `${base}images/projects/rpialarm/rpi_new_alarms.png`, alt: "RPI-Alarm new alarms" },
+      { src: `${base}images/projects/rpialarm/RPI_settings.png`, alt: "RPI-Alarm settings" },
     ],
   },
   {
@@ -78,8 +80,8 @@ export const projects: Project[] = [
     description: "Built a simple Flask web app that displays a random movie on each refresh and allows logged-in users to leave reviews. Integrated The Movie Database and Wikimedia APIs to fetch movie details and related content, with reviews stored in PostgreSQL. Deployed the application on Fly.io.",
     technologies: ["Python", "Flask", "PostgreSQL", "TMDb API", "Wikimedia API", "Fly.io", "HTML", "CSS"],
     images: [
-      { src: "/images/projects/moviereviews/sav1.png", alt: "Movie Reviews screenshot 1" },
-      { src: "/images/projects/moviereviews/save2.png", alt: "Movie Reviews screenshot 2" },
+      { src: `${base}images/projects/moviereviews/sav1.png`, alt: "Movie Reviews screenshot 1" },
+      { src: `${base}images/projects/moviereviews/save2.png`, alt: "Movie Reviews screenshot 2" },
     ],
   },
   {
@@ -90,9 +92,9 @@ export const projects: Project[] = [
     technologies: ["Python", "Flask", "Hugging Face Inference API", "PostgreSQL", "Fly.io", "HTML", "CSS"],
     github: "https://github.com/AliAlsaedi25/Group_project_Ali_Saad",
     images: [
-      { src: "/images/projects/txstsum/123.png", alt: "TextSum screenshot 1" },
-      { src: "/images/projects/txstsum/1234.png", alt: "TextSum screenshot 2" },
-      { src: "/images/projects/txstsum/12345-1.png", alt: "TextSum screenshot 3" },
+      { src: `${base}images/projects/txstsum/123.png`, alt: "TextSum screenshot 1" },
+      { src: `${base}images/projects/txstsum/1234.png`, alt: "TextSum screenshot 2" },
+      { src: `${base}images/projects/txstsum/12345-1.png`, alt: "TextSum screenshot 3" },
     ],
   },
 ];

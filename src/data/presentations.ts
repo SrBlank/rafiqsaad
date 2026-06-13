@@ -14,6 +14,8 @@ export interface Poster {
   image?: string;
 }
 
+const base = import.meta.env.BASE_URL;
+
 export const presentations: Presentation[] = [
   {
     id: "pres-9",
@@ -23,10 +25,10 @@ export const presentations: Presentation[] = [
     date: "Jun. 2024",
     award: "First Place Awardee",
     images: [
-      { src: "/images/presentations/newventures/newventures1.JPG", alt: "New Ventures presentation" },
-      { src: "/images/presentations/newventures/newventures2.JPG", alt: "New Ventures presentation" },
-      { src: "/images/presentations/newventures/newventures3.jpg", alt: "New Ventures presentation" },
-      { src: "/images/presentations/newventures/newventures4.JPG", alt: "New Ventures presentation" },
+      { src: `${base}images/presentations/newventures/newventures1.JPG`, alt: "New Ventures presentation" },
+      { src: `${base}images/presentations/newventures/newventures2.JPG`, alt: "New Ventures presentation" },
+      { src: `${base}images/presentations/newventures/newventures3.jpg`, alt: "New Ventures presentation" },
+      { src: `${base}images/presentations/newventures/newventures4.JPG`, alt: "New Ventures presentation" },
     ],
   },
   {
@@ -36,8 +38,8 @@ export const presentations: Presentation[] = [
     location: "Austin, Texas",
     date: "Mar. 2024",
     images: [
-      { src: "/images/presentations/sxsw/sxsw1.JPG", alt: "SXSW presentation" },
-      { src: "/images/presentations/sxsw/sxsw2.JPG", alt: "SXSW presentation" },
+      { src: `${base}images/presentations/sxsw/sxsw1.JPG`, alt: "SXSW presentation" },
+      { src: `${base}images/presentations/sxsw/sxsw2.JPG`, alt: "SXSW presentation" },
     ],
   },
   {
@@ -47,7 +49,7 @@ export const presentations: Presentation[] = [
     location: "Texas State University, San Marcos, Texas",
     date: "Nov. 2023",
     images: [
-      { src: "/images/presentations/shpeprofdev/profdev1.jpg", alt: "SHPE Professional Development" },
+      { src: `${base}images/presentations/shpeprofdev/profdev1.jpg`, alt: "SHPE Professional Development" },
     ],
   },
   {
@@ -56,7 +58,7 @@ export const presentations: Presentation[] = [
     event: "Numerical Analysis Research Presentation",
     location: "Texas State University, San Marcos, Texas",
     date: "Apr. 2023",
-    images: [{ src: "/images/presentations/numericalfinal/numericala.jpeg", alt: "Black-Scholes presentation" }],
+    images: [{ src: `${base}images/presentations/numericalfinal/numericala.jpeg`, alt: "Black-Scholes presentation" }],
   },
   {
     id: "pres-2",
@@ -65,9 +67,9 @@ export const presentations: Presentation[] = [
     location: "Texas State University, San Marcos, Texas",
     date: "Apr. 2023",
     images: [
-      { src: "/images/presentations/dataanalytics/data1.jpg", alt: "Data Analytics Showcase" },
-      { src: "/images/presentations/dataanalytics/data2.jpg", alt: "Data Analytics Showcase" },
-      { src: "/images/presentations/dataanalytics/data3.jpg", alt: "Data Analytics Showcase" },
+      { src: `${base}images/presentations/dataanalytics/data1.jpg`, alt: "Data Analytics Showcase" },
+      { src: `${base}images/presentations/dataanalytics/data2.jpg`, alt: "Data Analytics Showcase" },
+      { src: `${base}images/presentations/dataanalytics/data3.jpg`, alt: "Data Analytics Showcase" },
     ],
   },
   {
@@ -76,7 +78,7 @@ export const presentations: Presentation[] = [
     event: "Texas State Math Graduate Expo",
     location: "Texas State University, San Marcos, Texas",
     date: "Nov. 2022",
-    images: [{ src: "/images/presentations/mathgradexpo/mathexpo1.jpg", alt: "Math Graduate Expo" }],
+    images: [{ src: `${base}images/presentations/mathgradexpo/mathexpo1.jpg`, alt: "Math Graduate Expo" }],
   },
   {
     id: "pres-4",
@@ -85,8 +87,8 @@ export const presentations: Presentation[] = [
     location: "University of Houston, Houston, Texas",
     date: "Oct. 2022",
     images: [
-      { src: "/images/presentations/siam/siam1.jpg", alt: "SIAM presentation" },
-      { src: "/images/presentations/siam/siam2.jpg", alt: "SIAM presentation" },
+      { src: `${base}images/presentations/siam/siam1.jpg`, alt: "SIAM presentation" },
+      { src: `${base}images/presentations/siam/siam2.jpg`, alt: "SIAM presentation" },
     ],
   },
   {
@@ -96,9 +98,9 @@ export const presentations: Presentation[] = [
     location: "Texas State University, San Marcos, Texas",
     date: "Sep. 2022",
     images: [
-      { src: "/images/presentations/sydata/sydata1.jpg", alt: "SyData presentation" },
-      { src: "/images/presentations/sydata/sydata2.jpg", alt: "SyData presentation" },
-      { src: "/images/presentations/sydata/IMG_0193-e1673315754352.jpg", alt: "SyData presentation" },
+      { src: `${base}images/presentations/sydata/sydata1.jpg`, alt: "SyData presentation" },
+      { src: `${base}images/presentations/sydata/sydata2.jpg`, alt: "SyData presentation" },
+      { src: `${base}images/presentations/sydata/IMG_0193-e1673315754352.jpg`, alt: "SyData presentation" },
     ],
   },
   {
@@ -107,7 +109,7 @@ export const presentations: Presentation[] = [
     event: "Numerical Methods for Data Science and Engineering",
     location: "Texas State University, San Marcos, Texas",
     date: "Sep. 2022",
-    images: [{ src: "/images/presentations/nmdse/ndmse.png", alt: "Numerical Methods presentation" }],
+    images: [{ src: `${base}images/presentations/nmdse/ndmse.png`, alt: "Numerical Methods presentation" }],
   },
   {
     id: "pres-7",
@@ -117,12 +119,12 @@ export const presentations: Presentation[] = [
     date: "Jul. 2022",
     award: "First Place Awardee",
     images: [
-      { src: "/images/presentations/nsfreu/r2.jpg", alt: "NSF REU presentation" },
-      { src: "/images/presentations/nsfreu/r3.jpg", alt: "NSF REU presentation" },
-      { src: "/images/presentations/nsfreu/r4.jpg", alt: "NSF REU presentation" },
-      { src: "/images/presentations/nsfreu/r6.jpg", alt: "NSF REU presentation" },
-      { src: "/images/presentations/nsfreu/r8.jpg", alt: "NSF REU presentation" },
-      { src: "/images/presentations/nsfreu/reu-txst.jpg", alt: "NSF REU presentation" },
+      { src: `${base}images/presentations/nsfreu/r2.jpg`, alt: "NSF REU presentation" },
+      { src: `${base}images/presentations/nsfreu/r3.jpg`, alt: "NSF REU presentation" },
+      { src: `${base}images/presentations/nsfreu/r4.jpg`, alt: "NSF REU presentation" },
+      { src: `${base}images/presentations/nsfreu/r6.jpg`, alt: "NSF REU presentation" },
+      { src: `${base}images/presentations/nsfreu/r8.jpg`, alt: "NSF REU presentation" },
+      { src: `${base}images/presentations/nsfreu/reu-txst.jpg`, alt: "NSF REU presentation" },
     ],
   },
   {
@@ -132,9 +134,9 @@ export const presentations: Presentation[] = [
     location: "Texas State University, San Marcos, Texas",
     date: "Apr. 2022",
     images: [
-      { src: "/images/presentations/uhrc/uhrc1.jpg", alt: "Undergraduate Research Conference" },
-      { src: "/images/presentations/uhrc/uhrc2.jpg", alt: "Undergraduate Research Conference" },
-      { src: "/images/presentations/uhrc/uhrc3.jpg", alt: "Undergraduate Research Conference" },
+      { src: `${base}images/presentations/uhrc/uhrc1.jpg`, alt: "Undergraduate Research Conference" },
+      { src: `${base}images/presentations/uhrc/uhrc2.jpg`, alt: "Undergraduate Research Conference" },
+      { src: `${base}images/presentations/uhrc/uhrc3.jpg`, alt: "Undergraduate Research Conference" },
     ],
   },
 ];
@@ -143,16 +145,16 @@ export const posters: Poster[] = [
   {
     id: "poster-1",
     title: "Black-Scholes Methods Poster",
-    image: "/images/presentations/posters/blackscholes-poster.jpeg",
+    image: `${base}images/presentations/posters/blackscholes-poster.jpeg`,
   },
   {
     id: "poster-2",
     title: "Autonomous Robot Poster",
-    image: "/images/presentations/posters/robot-poster.png",
+    image: `${base}images/presentations/posters/robot-poster.png`,
   },
   {
     id: "poster-3",
     title: "RPCA Motion Detection Poster",
-    image: "/images/presentations/posters/rpca-poster.png",
+    image: `${base}images/presentations/posters/rpca-poster.png`,
   },
 ];
