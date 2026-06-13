@@ -11,7 +11,7 @@ const sections: Record<string, React.FC> = {
   Experience: ExperienceSection,
   Projects: ProjectsSection,
   Presentations: PresentationsSection,
-  Achievements: AchievementsSection,
+  Academic: AchievementsSection,
 };
 
 const Index = () => {

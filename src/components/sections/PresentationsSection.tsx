@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Award, MapPin, Calendar, Image as ImageIcon, X } from "lucide-react";
 import { presentations, posters } from "@/data/presentations";
@@ -7,6 +7,15 @@ import { Badge } from "@/components/ui/badge";
 
 const PresentationsSection = () => {
   const [expandedPoster, setExpandedPoster] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!expandedPoster) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setExpandedPoster(null);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [expandedPoster]);
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-3xl mx-auto py-12 px-4">

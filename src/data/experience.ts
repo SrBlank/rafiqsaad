@@ -31,7 +31,7 @@ export const experiences: Experience[] = [
     website: "https://www.dell.com/en-us",
   },
   {
-    id: "exp-1",
+    id: "exp-1b",
     company: "Dell Technologies",
     role: "Software Engineering Intern",
     location: "Austin, TX",

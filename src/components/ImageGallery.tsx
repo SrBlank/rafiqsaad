@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -32,6 +32,17 @@ const ImageGallery = ({ images, videos = [] }: ImageGalleryProps) => {
     e.stopPropagation();
     if (lightboxIndex !== null) setLightboxIndex((lightboxIndex - 1 + images.length) % images.length);
   };
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxIndex(null);
+      else if (e.key === "ArrowRight") setLightboxIndex(i => i === null ? null : (i + 1) % images.length);
+      else if (e.key === "ArrowLeft") setLightboxIndex(i => i === null ? null : (i - 1 + images.length) % images.length);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [lightboxIndex, images.length]);
 
   return (
     <div className="mt-4 space-y-3">

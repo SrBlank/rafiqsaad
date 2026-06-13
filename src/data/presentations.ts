@@ -20,7 +20,7 @@ export const presentations: Presentation[] = [
   {
     id: "pres-9",
     title: "TXST New Ventures Competition and Accelerator Program",
-    event: "$20,000 Starup Seed Funding",
+    event: "$20,000 Startup Seed Funding",
     location: "Texas State University, San Marcos, Texas",
     date: "Jun. 2024",
     award: "First Place Awardee",

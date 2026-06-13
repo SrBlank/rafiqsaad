@@ -8,7 +8,7 @@ interface HeaderProps {
   onTabChange: (tab: string) => void;
 }
 
-const tabs = ["Home", "Experience", "Projects", "Presentations", "Achievements"];
+const tabs = ["Home", "Experience", "Projects", "Presentations", "Academic"];
 
 const Header = ({ activeTab, onTabChange }: HeaderProps) => {
   return (
