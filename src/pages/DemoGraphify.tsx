@@ -4,7 +4,6 @@ import remarkGfm from "remark-gfm";
 import { motion } from "framer-motion";
 import { Network, Zap, HelpCircle, AlertTriangle, DollarSign, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import PinGate from "@/components/PinGate";
 
 const base = import.meta.env.BASE_URL;
 const ARTIFACT_ROOT = `${base}demo/graphify/`;
@@ -267,8 +266,7 @@ const DemoGraphify = () => {
   const hasAny = report || analysis || graph || cost;
 
   return (
-    <PinGate>
-      <div className="max-w-3xl mx-auto py-12 px-4">
+    <div className="max-w-3xl mx-auto py-12 px-4">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-heading mb-4">
@@ -324,8 +322,7 @@ const DemoGraphify = () => {
             )}
           </motion.div>
         )}
-      </div>
-    </PinGate>
+    </div>
   );
 };
 
