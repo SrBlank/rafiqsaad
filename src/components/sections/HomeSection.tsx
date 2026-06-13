@@ -46,11 +46,11 @@ const HomeSection = ({ onTabChange }: HomeSectionProps) => {
           </a>
         </div>
         <div className="flex items-center justify-center gap-3">
-          <Button onClick={() => onTabChange("Projects")} className="gap-2">
+          <Button onClick={() => onTabChange("Experience")} className="gap-2">
             View my work <ArrowRight className="h-4 w-4" />
           </Button>
-          <Button variant="outline" onClick={() => onTabChange("Experience")}>
-            Experience
+          <Button variant="outline" onClick={() => onTabChange("Projects")}>
+            Projects
           </Button>
         </div>
       </div>
