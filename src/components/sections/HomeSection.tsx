@@ -1,11 +1,16 @@
 import { motion } from "framer-motion";
-import { Mail, GraduationCap } from "lucide-react";
+import { Mail, GraduationCap, ArrowRight } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { profile } from "@/data/profile";
 import { education } from "@/data/education";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
-const HomeSection = () => {
+interface HomeSectionProps {
+  onTabChange: (tab: string) => void;
+}
+
+const HomeSection = ({ onTabChange }: HomeSectionProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -13,6 +18,14 @@ const HomeSection = () => {
       className="max-w-2xl mx-auto py-20 px-4"
     >
       <div className="text-center mb-12">
+        <motion.img
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.05 }}
+          src={profile.photoUrl}
+          alt={profile.name}
+          className="w-28 h-28 rounded-full object-cover object-top mx-auto mb-6 border-4 border-border shadow-md"
+        />
         <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-secondary text-secondary-foreground text-sm font-heading">
           {profile.title}
         </div>
@@ -21,7 +34,7 @@ const HomeSection = () => {
         </h1>
         <p className="text-xl text-muted-foreground font-heading mb-4">{profile.tagline}</p>
         <p className="text-muted-foreground leading-relaxed mb-8">{profile.bio}</p>
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-4 mb-8">
           <a href={`mailto:${profile.email}`} className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Email">
             <Mail className="h-5 w-5" />
           </a>
@@ -31,6 +44,14 @@ const HomeSection = () => {
           <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
             <FaLinkedinIn className="h-5 w-5" />
           </a>
+        </div>
+        <div className="flex items-center justify-center gap-3">
+          <Button onClick={() => onTabChange("Projects")} className="gap-2">
+            View my work <ArrowRight className="h-4 w-4" />
+          </Button>
+          <Button variant="outline" onClick={() => onTabChange("Experience")}>
+            Experience
+          </Button>
         </div>
       </div>
 

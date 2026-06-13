@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import HomeSection from "@/components/sections/HomeSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
@@ -7,7 +8,6 @@ import PresentationsSection from "@/components/sections/PresentationsSection";
 import AchievementsSection from "@/components/sections/AchievementsSection";
 
 const sections: Record<string, React.FC> = {
-  Home: HomeSection,
   Experience: ExperienceSection,
   Projects: ProjectsSection,
   Presentations: PresentationsSection,
@@ -19,11 +19,16 @@ const Index = () => {
   const ActiveSection = sections[activeTab];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header activeTab={activeTab} onTabChange={setActiveTab} />
-      <main>
-        <ActiveSection />
+      <main className="flex-1">
+        {activeTab === "Home" ? (
+          <HomeSection onTabChange={setActiveTab} />
+        ) : (
+          <ActiveSection />
+        )}
       </main>
+      <Footer />
     </div>
   );
 };

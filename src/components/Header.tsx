@@ -1,5 +1,7 @@
-import { Download } from "lucide-react";
+import { useState } from "react";
+import { Download, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import ThemeToggle from "./ThemeToggle";
 import { profile } from "@/data/profile";
 
@@ -11,6 +13,13 @@ interface HeaderProps {
 const tabs = ["Home", "Experience", "Projects", "Presentations", "Academic"];
 
 const Header = ({ activeTab, onTabChange }: HeaderProps) => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleTabChange = (tab: string) => {
+    onTabChange(tab);
+    setMobileOpen(false);
+  };
+
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="container flex items-center justify-between h-16">
@@ -42,24 +51,34 @@ const Header = ({ activeTab, onTabChange }: HeaderProps) => {
               <span className="hidden sm:inline">Resume</span>
             </a>
           </Button>
-        </div>
-      </div>
 
-      {/* Mobile nav */}
-      <div className="md:hidden flex overflow-x-auto border-t border-border px-4 gap-1 py-2 scrollbar-hide">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => onTabChange(tab)}
-            className={`whitespace-nowrap px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-              activeTab === tab
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
+          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-56 pt-10">
+              <SheetTitle className="font-heading text-base mb-6">{profile.name}</SheetTitle>
+              <nav className="flex flex-col gap-1">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => handleTabChange(tab)}
+                    className={`text-left px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
+                      activeTab === tab
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </nav>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );
