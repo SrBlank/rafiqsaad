@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { motion } from "framer-motion";
@@ -212,7 +212,15 @@ function ArtifactViewer() {
 
 // ── page ──────────────────────────────────────────────────────────────────────
 
-const DemoGraphify = () => (
+const DemoGraphify = () => {
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    const wasDark = root.classList.contains("dark");
+    root.classList.add("dark");
+    return () => { if (!wasDark) root.classList.remove("dark"); };
+  }, []);
+
+  return (
   <div className="max-w-3xl mx-auto py-12 px-4 space-y-14">
 
     {/* Intro */}
@@ -313,6 +321,7 @@ const DemoGraphify = () => (
     </motion.div>
 
   </div>
-);
+  );
+};
 
 export default DemoGraphify;
