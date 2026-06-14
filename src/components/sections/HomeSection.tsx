@@ -34,10 +34,7 @@ const HomeSection = ({ onTabChange }: HomeSectionProps) => {
         </h1>
         <p className="text-xl text-muted-foreground font-heading mb-4">{profile.tagline}</p>
         <p className="text-muted-foreground leading-relaxed mb-8">{profile.bio}</p>
-        <div className="flex items-center justify-center gap-4 mb-8">
-          <a href={`mailto:${profile.email}`} className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Email">
-            <Mail className="h-5 w-5" />
-          </a>
+        <div className="flex items-center justify-center gap-4 mb-4">
           <a href={profile.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
             <FaGithub className="h-5 w-5" />
           </a>
@@ -45,6 +42,13 @@ const HomeSection = ({ onTabChange }: HomeSectionProps) => {
             <FaLinkedinIn className="h-5 w-5" />
           </a>
         </div>
+        <a
+          href={`mailto:${profile.email}`}
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+        >
+          <Mail className="h-4 w-4" />
+          {profile.email}
+        </a>
         <div className="flex items-center justify-center gap-3">
           <Button onClick={() => onTabChange("Experience")} className="gap-2">
             View my work <ArrowRight className="h-4 w-4" />

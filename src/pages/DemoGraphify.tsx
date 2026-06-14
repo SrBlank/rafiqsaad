@@ -1,8 +1,8 @@
 import { useState, useEffect, useLayoutEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { motion } from "framer-motion";
-import { FileText, ExternalLink } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FileText, ExternalLink, ChevronDown } from "lucide-react";
 
 const base = import.meta.env.BASE_URL;
 
@@ -267,25 +267,46 @@ const DemoGraphify = () => {
         Three queries against the PostgreSQL graph, answered in seconds with no source browsing.
       </p>
       <div className="space-y-6">
-        {SESSION.map(({ prompt, response }, i) => (
-          <div key={i} className="space-y-2">
-            <div className="rounded-lg bg-primary/10 border border-primary/20 px-4 py-3">
-              <p className="text-xs font-semibold text-primary mb-1">Prompt {i + 1}</p>
-              <p className="text-sm">{prompt}</p>
-            </div>
-            <div className="rounded-lg bg-card border border-border px-4 py-3">
-              <p className="text-xs font-semibold text-muted-foreground mb-2">Response</p>
-              <div className="prose prose-sm dark:prose-invert max-w-none
-                prose-p:text-muted-foreground prose-p:my-1 prose-p:leading-relaxed
-                prose-code:text-foreground prose-code:bg-muted prose-code:px-1 prose-code:rounded prose-code:text-xs prose-code:before:content-none prose-code:after:content-none
-                prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:text-xs prose-pre:my-2
-                prose-table:text-sm prose-th:text-foreground prose-td:text-muted-foreground
-                prose-strong:text-foreground prose-li:text-muted-foreground prose-li:my-0">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>{response}</ReactMarkdown>
+        {SESSION.map(({ prompt, response }, i) => {
+          const [open, setOpen] = useState(false);
+          return (
+            <div key={i} className="space-y-2">
+              <div className="rounded-lg bg-primary/10 border border-primary/20 px-4 py-3">
+                <p className="text-xs font-semibold text-primary mb-1">Prompt {i + 1}</p>
+                <p className="text-sm">{prompt}</p>
+              </div>
+              <div className="rounded-lg bg-card border border-border overflow-hidden">
+                <button
+                  onClick={() => setOpen(o => !o)}
+                  className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-muted/40 transition-colors"
+                >
+                  <p className="text-xs font-semibold text-muted-foreground">Response</p>
+                  <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} />
+                </button>
+                <AnimatePresence initial={false}>
+                  {open && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 pb-4 prose prose-sm dark:prose-invert max-w-none
+                        prose-p:text-muted-foreground prose-p:my-1 prose-p:leading-relaxed
+                        prose-code:text-foreground prose-code:bg-muted prose-code:px-1 prose-code:rounded prose-code:text-xs prose-code:before:content-none prose-code:after:content-none
+                        prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:text-xs prose-pre:my-2
+                        prose-table:text-sm prose-th:text-foreground prose-td:text-muted-foreground
+                        prose-strong:text-foreground prose-li:text-muted-foreground prose-li:my-0">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{response}</ReactMarkdown>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </motion.div>
 
