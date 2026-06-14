@@ -2,328 +2,318 @@ import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { motion } from "framer-motion";
-import { Network, Zap, HelpCircle, AlertTriangle, DollarSign, FileText } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { FileText, ExternalLink } from "lucide-react";
 
 const base = import.meta.env.BASE_URL;
-const ARTIFACT_ROOT = `${base}demo/graphify/`;
 
-// ── types for graphify artifacts ──────────────────────────────────────────────
+// ── types ─────────────────────────────────────────────────────────────────────
 
-interface GraphJson {
-  nodes: { id: string; label?: string; community?: number; [k: string]: unknown }[];
-  links: { source: string; target: string; relation?: string; confidence?: string }[];
-}
+type ArtifactKey = "CLAUDE.md" | "GRAPH_REPORT.md";
 
-interface GodNode {
-  id: string;
-  label?: string;
-  degree?: number;
-  community?: number;
-}
+const ARTIFACTS: { key: ArtifactKey; label: string; description: string }[] = [
+  {
+    key: "CLAUDE.md",
+    label: "CLAUDE.md",
+    description: "Injected into every Claude Code session — tells the LLM that a knowledge graph exists and how to query it.",
+  },
+  {
+    key: "GRAPH_REPORT.md",
+    label: "GRAPH_REPORT.md",
+    description: "The LLM's reference document — community structure, god nodes, surprising edges, and suggested questions about the codebase.",
+  },
+];
 
-interface Surprise {
-  source_label?: string;
-  target_label?: string;
-  confidence?: string;
-  reasons?: string[];
-}
+// ── corpus metrics ─────────────────────────────────────────────────────────────
 
-interface Question {
-  type?: string;
-  question: string;
-  why?: string;
-}
+const corpusStats = [
+  { label: "Total files", value: "48,934" },
+  { label: "Total directories", value: "4,392" },
+  { label: "Total lines", value: "~200K" },
+];
 
-interface Analysis {
-  god_nodes?: GodNode[];
-  surprises?: Surprise[];
-  questions?: Question[];
-}
+const fileTypes = [
+  { ext: ".js",  count: "20,200", note: "JavaScript" },
+  { ext: ".h",   count: "7,337",  note: "C/C++ headers" },
+  { ext: ".cc",  count: "3,044",  note: "C++" },
+  { ext: ".c",   count: "2,889",  note: "C" },
+  { ext: ".mjs", count: "1,655",  note: "ES modules" },
+  { ext: ".rs",  count: "979",    note: "Rust" },
+  { ext: ".cpp", count: "850",    note: "C++" },
+  { ext: ".hpp", count: "635",    note: "C++ headers" },
+  { ext: ".py",  count: "567",    note: "Python tooling" },
+  { ext: ".tq",  count: "246",    note: "Torque (V8 type DSL)" },
+];
 
-interface Cost {
-  input?: number;
-  output?: number;
-  cost_usd?: number;
-}
+// ── usage session ─────────────────────────────────────────────────────────────
 
-// ── fetch helper ─────────────────────────────────────────────────────────────
+const SESSION = [
+  {
+    prompt: "Give me a high-level map of how PostgreSQL processes a query — from the moment a client sends SQL to when rows are returned.",
+    response: `\`\`\`
+Client (psql / libpq)
+       │ TCP or Unix socket
+       ▼
+PHASE 0 — Connection & Message Loop
+  Postmaster forks a backend. PostgresMain() reads the wire.
+  Simple query → exec_simple_query(). Extended protocol → exec_bind/execute.
+       │ raw SQL string
+       ▼
+PHASE 1 — Parsing
+  pg_parse_query() feeds SQL to flex/bison. Produces a raw parse tree (RawStmt list).
+  No catalog lookups yet.
+       │ raw parse tree
+       ▼
+PHASE 2 — Analysis & Rewriting
+  pg_analyze_and_rewrite(): resolves names, assigns types, builds Query struct.
+  QueryRewrite() fires pg_rewrite rules (views, row-security).
+       │ List of Query
+       ▼
+PHASE 3 — Planning / Optimization
+  standard_planner(): enumerates access paths, join ordering via DP (≤8 rels)
+  or GEQO (genetic algo). costsize.c estimates costs using pg_statistic.
+       │ PlannedStmt
+       ▼
+PHASE 4 — Execution (Volcano / Iterator model)
+  ExecutorRun(): ExecProcNode() pulls tuples bottom-up.
+  JIT compilation (LLVM) for hot expression evaluation.
+  Parallel workers via DSM + Gather/GatherMerge.
+       │ tuple demand
+       ▼
+PHASE 5 — Storage (called during execution)
+  ReadBuffer() pins 8KB pages. MVCC visibility check.
+  heap_getnext() / index_getnext() returns visible tuples.
+  DML: WAL record written before data change.
+       │ DataRow messages
+       ▼
+PHASE 6 — Result Transmission
+  Tuples serialized to FE/BE protocol: DataRow (T) → CommandComplete (C).
+\`\`\`
 
-async function tryFetch<T>(path: string, parser: "json" | "text"): Promise<T | null> {
-  try {
-    const r = await fetch(path);
-    if (!r.ok) return null;
-    return parser === "json" ? r.json() : r.text() as unknown as T;
-  } catch {
-    return null;
-  }
-}
+**Key structural insight:** \`postgres.c\` is the central hub — \`exec_simple_query()\` calls parse → analyze → plan → portal in four lines. 40K+ nodes across 1,467 communities hang off that chain.`,
+  },
+  {
+    prompt: "What is the relationship between the COPY FROM infrastructure and the logical replication apply worker? Do they share code paths?",
+    response: `Two parallel paths that share the bottom half of the executor.
 
-// ── sub-components ────────────────────────────────────────────────────────────
+**Initial table sync** (\`tablesync.c:copy_table()\`): directly calls \`CopyFrom()\` with a custom \`copy_read_data\` callback that reads from the WAL receiver instead of a file. Gets bulk-insert performance (batching N tuples via \`table_multi_insert()\`) for free.
+
+**Ongoing apply** (\`worker.c:apply_handle_insert()\`): never touches \`CopyFrom()\`. Decodes one tuple at a time from the logical decoding stream → \`ExecSimpleRelationInsert()\` in \`execReplication.c\` → \`ExecInsert()\` in \`nodeModifyTable.c\`.
+
+| Layer | Shared? |
+|---|---|
+| \`ExecInsertIndexTuples()\` | ✓ Both call execIndexing.c |
+| \`ExecARInsertTriggers()\` | ✓ AFTER INSERT triggers |
+| Table AM (\`tableam.h\`) | ✓ Different entry points: \`table_multi_insert()\` vs \`table_tuple_insert()\` |
+| Format decoding | ✗ COPY uses copyfrom_parse.c; apply uses proto.c |
+| Batching | ✗ COPY batches; apply is 1-tuple |
+
+\`execReplication.c\` is the apply worker's private executor shim — it lets the apply worker drive executor machinery without going through the full planner/portal path.`,
+  },
+  {
+    prompt: "If I needed to change how transaction IDs are assigned, what would be affected and what's the blast radius?",
+    response: `Depends on the type of change:
+
+| Change type | Blast radius |
+|---|---|
+| Assignment policy (skip XIDs, start value) | Moderate — stays within transam layer |
+| Wraparound comparison semantics | Very large — every visibility check |
+| Width (32 → 64 bit) | Catastrophic — breaks on-disk format everywhere |
+
+**The concentric rings:**
+\`\`\`
+[1] varsup.c:GetNewTransactionId()     ← single assignment point
+   [2] htup_details.h                  ← XID stamped on every tuple (DISK FORMAT)
+      [3] clog.c / commit_ts.c         ← XID→status maps (DISK FORMAT)
+         [4] procarray.c / snapmgr.c   ← snapshot construction
+            [5] heapam.c visibility    ← every tuple scan (HOT PATH)
+               [6] vacuum / freeze     ← wraparound prevention
+               [7] xlog.c / WAL       ← recovery (DISK FORMAT)
+               [8] reorderbuffer.c     ← logical replication
+               [9] predicate.c (SSI)
+[Tools] pg_resetwal, pg_upgrade, pg_dump, amcheck
+[SQL]   xid type, xmin/xmax syscolumns, snapshot functions
+\`\`\`
+
+A policy change touches rings 1–3. A width change (32→64 bit) breaks every ring, every tool, and every on-disk data file — it requires either a new storage format or a full data directory migration.`,
+  },
+];
+
+// ── components ────────────────────────────────────────────────────────────────
 
 const Card = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <div className={`rounded-xl bg-card border border-border p-6 ${className}`}>{children}</div>
 );
 
-const SectionTitle = ({ icon: Icon, title }: { icon: React.ElementType; title: string }) => (
-  <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-    <Icon className="h-5 w-5 text-primary" />
-    {title}
-  </h2>
-);
+function ArtifactViewer() {
+  const [active, setActive] = useState<ArtifactKey>("CLAUDE.md");
+  const [contents, setContents] = useState<Record<string, string>>({});
 
-function GraphStats({ graph }: { graph: GraphJson }) {
-  const communityIds = [...new Set(graph.nodes.map(n => n.community).filter(c => c !== undefined))];
-
-  const degreeMap: Record<string, number> = {};
-  for (const link of graph.links) {
-    degreeMap[link.source] = (degreeMap[link.source] ?? 0) + 1;
-    degreeMap[link.target] = (degreeMap[link.target] ?? 0) + 1;
-  }
-  const topNodes = Object.entries(degreeMap)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 6)
-    .map(([id, deg]) => {
-      const node = graph.nodes.find(n => n.id === id);
-      return { label: node?.label ?? id, degree: deg };
+  useEffect(() => {
+    ARTIFACTS.forEach(({ key }) => {
+      fetch(`${base}demo/graphify/${key}`)
+        .then(r => r.ok ? r.text() : null)
+        .then(text => { if (text) setContents(prev => ({ ...prev, [key]: text })); })
+        .catch(() => {});
     });
+  }, []);
 
-  const confidenceCounts = graph.links.reduce<Record<string, number>>((acc, l) => {
-    const k = l.confidence ?? "UNKNOWN";
-    acc[k] = (acc[k] ?? 0) + 1;
-    return acc;
-  }, {});
-
-  const statItems = [
-    { label: "Nodes", value: graph.nodes.length },
-    { label: "Edges", value: graph.links.length },
-    { label: "Communities", value: communityIds.length },
-  ];
+  const activeArtifact = ARTIFACTS.find(a => a.key === active)!;
+  const content = contents[active];
 
   return (
-    <Card>
-      <SectionTitle icon={Network} title="Graph Overview" />
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        {statItems.map(({ label, value }) => (
-          <div key={label} className="text-center p-3 rounded-lg bg-muted">
-            <p className="text-2xl font-bold text-primary">{value.toLocaleString()}</p>
+    <div className="flex flex-col md:flex-row gap-0 rounded-xl border border-border overflow-hidden">
+      {/* Sidebar */}
+      <div className="md:w-48 shrink-0 bg-muted/50 border-b md:border-b-0 md:border-r border-border">
+        <div className="p-3">
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Artifacts</p>
+          {ARTIFACTS.map(({ key, label }) => (
+            <button
+              key={key}
+              onClick={() => setActive(key)}
+              className={`w-full text-left px-3 py-2 rounded-md text-sm font-mono transition-colors flex items-center gap-2 ${
+                active === key
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+              }`}
+            >
+              <FileText className="h-3.5 w-3.5 shrink-0" />
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Preview */}
+      <div className="flex-1 min-w-0">
+        <div className="px-5 py-3 border-b border-border bg-muted/30">
+          <p className="text-xs text-muted-foreground">{activeArtifact.description}</p>
+        </div>
+        <div className="p-5 overflow-auto max-h-[500px]">
+          {content ? (
+            <div className="prose prose-sm dark:prose-invert max-w-none
+              prose-headings:font-bold prose-headings:text-foreground
+              prose-p:text-muted-foreground prose-p:leading-relaxed
+              prose-code:text-foreground prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-xs prose-code:before:content-none prose-code:after:content-none
+              prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:text-xs
+              prose-table:text-sm prose-th:text-foreground prose-td:text-muted-foreground
+              prose-strong:text-foreground prose-li:text-muted-foreground">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">Loading…</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── page ──────────────────────────────────────────────────────────────────────
+
+const DemoGraphify = () => (
+  <div className="max-w-3xl mx-auto py-12 px-4 space-y-14">
+
+    {/* Intro */}
+    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
+      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-heading mb-4">
+        Internal Demo
+      </div>
+      <h1 className="text-4xl font-bold tracking-tight mb-3">Graphify</h1>
+      <p className="text-muted-foreground mb-6">
+        Graphify builds a knowledge graph from source code and injects it into LLM sessions — giving AI coding tools structural understanding of a codebase without exposing raw source. Tested here against the <strong className="text-foreground">PostgreSQL</strong> repository, an enterprise-grade C/C++ codebase.
+      </p>
+
+      {/* Corpus metrics */}
+      <div className="grid grid-cols-3 gap-3 mb-4">
+        {corpusStats.map(({ label, value }) => (
+          <div key={label} className="text-center p-3 rounded-lg bg-card border border-border">
+            <p className="text-xl font-bold text-primary">{value}</p>
             <p className="text-xs text-muted-foreground mt-1">{label}</p>
           </div>
         ))}
       </div>
 
-      {Object.keys(confidenceCounts).length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-6">
-          {Object.entries(confidenceCounts).map(([conf, count]) => (
-            <Badge key={conf} variant={conf === "EXTRACTED" ? "default" : conf === "INFERRED" ? "secondary" : "outline"}>
-              {conf}: {count}
-            </Badge>
-          ))}
-        </div>
-      )}
-
-      {topNodes.length > 0 && (
-        <>
-          <p className="text-sm font-semibold text-muted-foreground mb-2">Most connected nodes</p>
-          <div className="space-y-1.5">
-            {topNodes.map(({ label, degree }) => (
-              <div key={label} className="flex items-center justify-between text-sm">
-                <span className="font-mono text-xs truncate max-w-[70%]">{label}</span>
-                <span className="text-muted-foreground text-xs">{degree} connections</span>
-              </div>
+      {/* File types table */}
+      <div className="rounded-lg border border-border overflow-hidden">
+        <table className="w-full text-sm">
+          <thead className="bg-muted/50">
+            <tr>
+              <th className="text-left px-4 py-2 text-xs font-semibold text-muted-foreground">Extension</th>
+              <th className="text-right px-4 py-2 text-xs font-semibold text-muted-foreground">Count</th>
+              <th className="text-left px-4 py-2 text-xs font-semibold text-muted-foreground hidden sm:table-cell">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {fileTypes.map(({ ext, count, note }, i) => (
+              <tr key={ext} className={i % 2 === 0 ? "bg-card" : "bg-muted/20"}>
+                <td className="px-4 py-1.5 font-mono text-xs text-foreground">{ext}</td>
+                <td className="px-4 py-1.5 text-right text-xs text-muted-foreground">{count}</td>
+                <td className="px-4 py-1.5 text-xs text-muted-foreground hidden sm:table-cell">{note}</td>
+              </tr>
             ))}
-          </div>
-        </>
-      )}
-    </Card>
-  );
-}
-
-function AnalysisSection({ analysis }: { analysis: Analysis }) {
-  const godNodes = analysis.god_nodes?.slice(0, 8) ?? [];
-  const surprises = analysis.surprises?.slice(0, 6) ?? [];
-  const questions = analysis.questions?.slice(0, 8) ?? [];
-
-  return (
-    <div className="space-y-6">
-      {godNodes.length > 0 && (
-        <Card>
-          <SectionTitle icon={Zap} title="God Nodes" />
-          <p className="text-sm text-muted-foreground mb-4">
-            Highly connected symbols that many other parts of the codebase depend on.
-          </p>
-          <div className="space-y-2">
-            {godNodes.map((n, i) => (
-              <div key={n.id} className="flex items-center justify-between text-sm p-2 rounded-md bg-muted/50">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-muted-foreground w-4">{i + 1}.</span>
-                  <span className="font-mono text-xs">{n.label ?? n.id}</span>
-                </div>
-                {n.degree !== undefined && (
-                  <Badge variant="secondary" className="text-xs">{n.degree} edges</Badge>
-                )}
-              </div>
-            ))}
-          </div>
-        </Card>
-      )}
-
-      {surprises.length > 0 && (
-        <Card>
-          <SectionTitle icon={AlertTriangle} title="Surprising Connections" />
-          <p className="text-sm text-muted-foreground mb-4">
-            Cross-community or cross-file edges that are unexpected given the graph structure.
-          </p>
-          <div className="space-y-3">
-            {surprises.map((s, i) => (
-              <div key={i} className="text-sm p-3 rounded-md border border-border bg-muted/30">
-                <p className="font-mono text-xs">
-                  <span className="text-primary">{s.source_label}</span>
-                  <span className="text-muted-foreground mx-2">→</span>
-                  <span className="text-primary">{s.target_label}</span>
-                </p>
-                {s.confidence && (
-                  <Badge variant="outline" className="text-xs mt-1">{s.confidence}</Badge>
-                )}
-                {s.reasons && s.reasons.length > 0 && (
-                  <p className="text-muted-foreground text-xs mt-1">{s.reasons[0]}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </Card>
-      )}
-
-      {questions.length > 0 && (
-        <Card>
-          <SectionTitle icon={HelpCircle} title="Suggested Questions" />
-          <p className="text-sm text-muted-foreground mb-4">
-            Questions the graph is uniquely positioned to answer about this codebase.
-          </p>
-          <div className="space-y-3">
-            {questions.map((q, i) => (
-              <div key={i} className="text-sm p-3 rounded-md border border-border">
-                {q.type && (
-                  <Badge variant="outline" className="text-xs mb-2">{q.type}</Badge>
-                )}
-                <p className="font-medium">{q.question}</p>
-                {q.why && <p className="text-muted-foreground text-xs mt-1">{q.why}</p>}
-              </div>
-            ))}
-          </div>
-        </Card>
-      )}
-    </div>
-  );
-}
-
-function CostCard({ cost }: { cost: Cost }) {
-  return (
-    <Card>
-      <SectionTitle icon={DollarSign} title="LLM Cost" />
-      <div className="flex flex-wrap gap-6 text-sm">
-        {cost.input !== undefined && (
-          <div>
-            <p className="text-muted-foreground text-xs">Input tokens</p>
-            <p className="font-semibold">{cost.input.toLocaleString()}</p>
-          </div>
-        )}
-        {cost.output !== undefined && (
-          <div>
-            <p className="text-muted-foreground text-xs">Output tokens</p>
-            <p className="font-semibold">{cost.output.toLocaleString()}</p>
-          </div>
-        )}
-        {cost.cost_usd !== undefined && (
-          <div>
-            <p className="text-muted-foreground text-xs">Estimated cost</p>
-            <p className="font-semibold">${cost.cost_usd.toFixed(4)}</p>
-          </div>
-        )}
+          </tbody>
+        </table>
       </div>
-    </Card>
-  );
-}
+    </motion.div>
 
-// ── main page ─────────────────────────────────────────────────────────────────
-
-const DemoGraphify = () => {
-  const [report, setReport] = useState<string | null>(null);
-  const [analysis, setAnalysis] = useState<Analysis | null>(null);
-  const [graph, setGraph] = useState<GraphJson | null>(null);
-  const [cost, setCost] = useState<Cost | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    Promise.all([
-      tryFetch<string>(`${ARTIFACT_ROOT}GRAPH_REPORT.md`, "text").then(setReport),
-      tryFetch<Analysis>(`${ARTIFACT_ROOT}.graphify_analysis.json`, "json").then(setAnalysis),
-      tryFetch<GraphJson>(`${ARTIFACT_ROOT}graph.json`, "json").then(setGraph),
-      tryFetch<Cost>(`${ARTIFACT_ROOT}cost.json`, "json").then(setCost),
-    ]).finally(() => setLoading(false));
-  }, []);
-
-  const hasAny = report || analysis || graph || cost;
-
-  return (
-    <div className="max-w-3xl mx-auto py-12 px-4">
-        {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-heading mb-4">
-            <Network className="h-3.5 w-3.5" /> Internal Demo
+    {/* Usage example */}
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
+      <h2 className="text-2xl font-bold mb-2">Usage Example</h2>
+      <p className="text-sm text-muted-foreground mb-6">
+        Three queries against the PostgreSQL graph, answered in seconds with no source browsing.
+      </p>
+      <div className="space-y-6">
+        {SESSION.map(({ prompt, response }, i) => (
+          <div key={i} className="space-y-2">
+            <div className="rounded-lg bg-primary/10 border border-primary/20 px-4 py-3">
+              <p className="text-xs font-semibold text-primary mb-1">Prompt {i + 1}</p>
+              <p className="text-sm">{prompt}</p>
+            </div>
+            <div className="rounded-lg bg-card border border-border px-4 py-3">
+              <p className="text-xs font-semibold text-muted-foreground mb-2">Response</p>
+              <div className="prose prose-sm dark:prose-invert max-w-none
+                prose-p:text-muted-foreground prose-p:my-1 prose-p:leading-relaxed
+                prose-code:text-foreground prose-code:bg-muted prose-code:px-1 prose-code:rounded prose-code:text-xs prose-code:before:content-none prose-code:after:content-none
+                prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:text-xs prose-pre:my-2
+                prose-table:text-sm prose-th:text-foreground prose-td:text-muted-foreground
+                prose-strong:text-foreground prose-li:text-muted-foreground prose-li:my-0">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{response}</ReactMarkdown>
+              </div>
+            </div>
           </div>
-          <h1 className="text-4xl font-bold tracking-tight mb-2">Graphify</h1>
-          <p className="text-muted-foreground">
-            A codebase intelligence tool that extracts symbol graphs, clusters communities, identifies
-            high-risk nodes, and surfaces surprising cross-cutting dependencies. The artifacts below
-            were generated by running graphify against a real repository.
-          </p>
-        </motion.div>
+        ))}
+      </div>
+    </motion.div>
 
-        {loading && (
-          <div className="text-center text-muted-foreground py-20 text-sm">Loading artifacts…</div>
-        )}
+    {/* Artifact viewer */}
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}>
+      <h2 className="text-2xl font-bold mb-2">Artifacts</h2>
+      <p className="text-sm text-muted-foreground mb-6">
+        Two files graphify produces for every analyzed repo.
+      </p>
+      <ArtifactViewer />
+    </motion.div>
 
-        {!loading && !hasAny && (
-          <Card className="text-center py-12">
-            <FileText className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
-            <p className="font-semibold">No artifacts yet</p>
-            <p className="text-sm text-muted-foreground mt-1">
-              Run graphify and copy the output files into{" "}
-              <code className="font-mono text-xs bg-muted px-1 py-0.5 rounded">public/demo/graphify/</code>
-            </p>
-          </Card>
-        )}
+    {/* Graph visual */}
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+      <h2 className="text-2xl font-bold mb-2">Code Graph Visual</h2>
+      <Card>
+        <p className="text-sm text-muted-foreground mb-1">
+          For humans only — not consumed by the LLM. The full graph has ~40,000 nodes; this view is reduced to the top 5,000 for rendering.
+        </p>
+        <p className="text-xs text-muted-foreground mb-4">May take a moment to load.</p>
+        <a
+          href={`${base}demo/graphify/graph_top5000.html`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm text-primary hover:underline font-medium"
+        >
+          Open graph visualization <ExternalLink className="h-4 w-4" />
+        </a>
+      </Card>
+    </motion.div>
 
-        {!loading && hasAny && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="space-y-6"
-          >
-            {graph && <GraphStats graph={graph} />}
-            {analysis && <AnalysisSection analysis={analysis} />}
-            {cost && <CostCard cost={cost} />}
-            {report && (
-              <Card>
-                <SectionTitle icon={FileText} title="Full Report" />
-                <div className="prose prose-sm dark:prose-invert max-w-none
-                  prose-headings:font-bold prose-headings:text-foreground
-                  prose-p:text-muted-foreground prose-p:leading-relaxed
-                  prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                  prose-code:text-foreground prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-xs
-                  prose-pre:bg-muted prose-pre:border prose-pre:border-border
-                  prose-table:text-sm prose-th:text-foreground prose-td:text-muted-foreground
-                  prose-strong:text-foreground prose-li:text-muted-foreground">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{report}</ReactMarkdown>
-                </div>
-              </Card>
-            )}
-          </motion.div>
-        )}
-    </div>
-  );
-};
+  </div>
+);
 
 export default DemoGraphify;
