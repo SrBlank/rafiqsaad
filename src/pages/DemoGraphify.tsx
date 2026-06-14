@@ -26,22 +26,24 @@ const ARTIFACTS: { key: ArtifactKey; label: string; description: string }[] = [
 // ── corpus metrics ─────────────────────────────────────────────────────────────
 
 const corpusStats = [
-  { label: "Total files", value: "48,934" },
-  { label: "Total directories", value: "4,392" },
-  { label: "Total lines", value: "~200K" },
+  { label: "Total files", value: "7,461" },
+  { label: "Total directories", value: "701" },
+  { label: "Total lines", value: "~910K" },
+  { label: "Working tree", value: "161 MB" },
+  { label: "Git history", value: "762 MB" },
+  { label: "Commits", value: "64,479" },
 ];
 
 const fileTypes = [
-  { ext: ".js",  count: "20,200", note: "JavaScript" },
-  { ext: ".h",   count: "7,337",  note: "C/C++ headers" },
-  { ext: ".cc",  count: "3,044",  note: "C++" },
-  { ext: ".c",   count: "2,889",  note: "C" },
-  { ext: ".mjs", count: "1,655",  note: "ES modules" },
-  { ext: ".rs",  count: "979",    note: "Rust" },
-  { ext: ".cpp", count: "850",    note: "C++" },
-  { ext: ".hpp", count: "635",    note: "C++ headers" },
-  { ext: ".py",  count: "567",    note: "Python tooling" },
-  { ext: ".tq",  count: "246",    note: "Torque (V8 type DSL)" },
+  { ext: ".c",   count: "1,544", note: "C source" },
+  { ext: ".h",   count: "1,020", note: "Headers" },
+  { ext: ".out", count: "869",   note: "Expected test output" },
+  { ext: ".sql", count: "855",   note: "SQL tests & scripts" },
+  { ext: ".po",  count: "467",   note: "Translations" },
+  { ext: ".sgml",count: "430",   note: "Documentation" },
+  { ext: ".pl",  count: "360",   note: "Perl scripts" },
+  { ext: ".pgc", count: "72",    note: "Embedded C (ecpg)" },
+  { ext: "(none)", count: "496", note: "" },
 ];
 
 // ── usage session ─────────────────────────────────────────────────────────────
@@ -215,16 +217,13 @@ const DemoGraphify = () => (
 
     {/* Intro */}
     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-heading mb-4">
-        Internal Demo
-      </div>
       <h1 className="text-4xl font-bold tracking-tight mb-3">Graphify</h1>
       <p className="text-muted-foreground mb-6">
-        Graphify builds a knowledge graph from source code and injects it into LLM sessions — giving AI coding tools structural understanding of a codebase without exposing raw source. Tested here against the <strong className="text-foreground">PostgreSQL</strong> repository, an enterprise-grade C/C++ codebase.
+        Graphify builds a knowledge graph from source code that LLMs can query for structural understanding of a codebase — without exposing raw source. Tested here against the <strong className="text-foreground">PostgreSQL</strong> repository, an enterprise-grade C codebase.
       </p>
 
       {/* Corpus metrics */}
-      <div className="grid grid-cols-3 gap-3 mb-4">
+      <div className="grid grid-cols-3 sm:grid-cols-3 gap-3 mb-4">
         {corpusStats.map(({ label, value }) => (
           <div key={label} className="text-center p-3 rounded-lg bg-card border border-border">
             <p className="text-xl font-bold text-primary">{value}</p>
