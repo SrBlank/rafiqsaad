@@ -8,7 +8,7 @@ const base = import.meta.env.BASE_URL;
 
 // ── types ─────────────────────────────────────────────────────────────────────
 
-type ArtifactKey = "CLAUDE.md" | "GRAPH_REPORT.md";
+type ArtifactKey = "CLAUDE.md" | "GRAPH_REPORT.md" | ".graphify_labels.json";
 
 const ARTIFACTS: { key: ArtifactKey; label: string; description: string }[] = [
   {
@@ -21,6 +21,11 @@ const ARTIFACTS: { key: ArtifactKey; label: string; description: string }[] = [
     label: "GRAPH_REPORT.md",
     description: "The LLM's reference document — community structure, god nodes, surprising edges, and suggested questions about the codebase.",
   },
+  {
+    key: ".graphify_labels.json",
+    label: ".graphify_labels.json",
+    description: "Human-curated community labels — maps numeric community IDs to meaningful names that appear throughout the report and graph.",
+  },
 ];
 
 // ── corpus metrics ─────────────────────────────────────────────────────────────
@@ -29,9 +34,6 @@ const corpusStats = [
   { label: "Total files", value: "7,461" },
   { label: "Total directories", value: "701" },
   { label: "Total lines", value: "~910K" },
-  { label: "Working tree", value: "161 MB" },
-  { label: "Git history", value: "762 MB" },
-  { label: "Commits", value: "64,479" },
 ];
 
 const fileTypes = [
@@ -295,9 +297,18 @@ const DemoGraphify = () => {
     {/* Artifact viewer */}
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}>
       <h2 className="text-2xl font-bold mb-2">Artifacts</h2>
-      <p className="text-sm text-muted-foreground mb-6">
-        Two files graphify produces for every analyzed repo.
+      <p className="text-sm text-muted-foreground mb-4">
+        Everything graphify produces lives directly in the repo — no external service, no database. Drop it in, commit it, and it travels with the code.
       </p>
+      <div className="rounded-lg bg-muted/40 border border-border px-5 py-4 font-mono text-xs text-muted-foreground mb-6 leading-relaxed">
+        <p className="text-foreground font-semibold mb-1">postgres/</p>
+        <p className="pl-4">CLAUDE.md</p>
+        <p className="pl-4">graphify-out/</p>
+        <p className="pl-8">graph.json <span className="text-muted-foreground/60">(~70 MB — full symbol graph)</span></p>
+        <p className="pl-8">GRAPH_REPORT.md</p>
+        <p className="pl-8">.graphify_labels.json</p>
+        <p className="pl-8">graph_top5000.html</p>
+      </div>
       <ArtifactViewer />
     </motion.div>
 
