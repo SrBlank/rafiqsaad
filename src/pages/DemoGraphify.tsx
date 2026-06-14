@@ -8,7 +8,7 @@ const base = import.meta.env.BASE_URL;
 
 // ── types ─────────────────────────────────────────────────────────────────────
 
-type ArtifactKey = "CLAUDE.md" | "GRAPH_REPORT.md" | ".graphify_labels.json";
+type ArtifactKey = "CLAUDE.md" | "GRAPH_REPORT.md";
 
 const ARTIFACTS: { key: ArtifactKey; label: string; description: string }[] = [
   {
@@ -20,11 +20,6 @@ const ARTIFACTS: { key: ArtifactKey; label: string; description: string }[] = [
     key: "GRAPH_REPORT.md",
     label: "GRAPH_REPORT.md",
     description: "The LLM's reference document — community structure, god nodes, surprising edges, and suggested questions about the codebase.",
-  },
-  {
-    key: ".graphify_labels.json",
-    label: ".graphify_labels.json",
-    description: "Human-curated community labels — maps numeric community IDs to meaningful names that appear throughout the report and graph.",
   },
 ];
 
